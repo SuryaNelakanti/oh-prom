@@ -1,5 +1,5 @@
 """
-ASGI config for collab_engine project.
+ASGI config for api_engine project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "collab_engine.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "api_engine.settings")
 
 application = get_asgi_application()
