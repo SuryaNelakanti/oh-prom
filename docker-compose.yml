@@ -5,6 +5,8 @@ services:
       - '8000:8000'
     volumes:
       - ./backend:/backend
+    depends_on:
+      - db
 
   web:
     build: ./frontend
@@ -12,3 +14,12 @@ services:
       - '3000:80'
     volumes:
       - ./frontend:/frontend
+
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
