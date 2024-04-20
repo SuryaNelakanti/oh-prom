@@ -62,14 +62,21 @@ paths:
                 type: string
         "400":
           description: Invalid username/password supplied
-  /user/logout:
+  /logout:
     post:
       tags:
         - User
       summary: Logs out current logged in user session
       description: ""
       operationId: logoutUser
-      parameters: []
+      requestBody:
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  refresh_token: 
+                    type: string
       responses:
         default:
           description: successful operation
