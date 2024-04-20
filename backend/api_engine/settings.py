@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "accounts",
     "projects",
     "tasks",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
@@ -60,10 +61,17 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
     "DATE_INPUT_FORMATS": [
         ("%d-%m-%Y"),
     ],
 }
+
+AUTHENTICATION_BACKENDS = [
+    "utils.custom_authentication.CustomBackend",
+]
 
 TEMPLATES = [
     {
