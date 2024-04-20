@@ -16,6 +16,16 @@ services:
       - ./backend:/backend
     depends_on:
       - db
+    command:
+      [
+        './wait-for-connect.sh',
+        'db:5432',
+        '--',
+        'python',
+        'manage.py',
+        'runserver',
+        '0.0.0.0:8000',
+      ]
 
   web:
     build: ./frontend
