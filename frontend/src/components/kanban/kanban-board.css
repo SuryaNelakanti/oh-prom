@@ -1,0 +1,47 @@
+.board {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+}
+
+.column {
+  min-width: 16rem;
+  padding: 0.2rem;
+  background-color: var(--card-hover-icon-background-color);
+}
+
+.item {
+  border: 1px solid black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 15rem;
+  min-height: 4rem;
+  background-color: var(--background-color);
+  box-shadow:
+    0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
+      var(--card-box-shadow-1),
+    0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur)
+      var(--card-box-shadow-2),
+    0 0 0 1px var(--card-border-color);
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  border-radius: 15px;
+  transition: box-shadow 0.25s;
+  width: 100%;
+  height: 100%;
+  &:hover {
+    box-shadow:
+      0px 3px 6px var(--card-hover-box-shadow-1),
+      0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur)
+        var(--card-hover-box-shadow-2),
+      0 0 0 1px var(--card-hover-border-color);
+
+    .icon {
+      &::after {
+        background-color: var(--card-hover-icon-background-color);
+        border-color: var(--card-hover-icon-border-color);
+      }
+    }
+  }
+}
