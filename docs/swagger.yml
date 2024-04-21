@@ -12,7 +12,7 @@ info:
   version: 1.0.11
 
 paths:
-  /user:
+  /users:
     post:
       tags:
         - User
@@ -80,7 +80,7 @@ paths:
       responses:
         default:
           description: successful operation
-  /user/{id}:
+  /users/{id}:
     get:
       tags:
         - User
@@ -178,8 +178,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Project"
-
-  /project/{id}:
+  /projects/{id}:
     get:
       tags:
         - Project
@@ -235,8 +234,7 @@ paths:
       responses:
         "201":
           description: successfull operation
-
-  /project/{id}/task/:
+  /projects/{id}/tasks/:
     post:
       tags:
         - Task
@@ -261,7 +259,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Task"
-  /task/{id}:
+  
+  /tasks/{id}:
     get:
       tags:
         - Task
