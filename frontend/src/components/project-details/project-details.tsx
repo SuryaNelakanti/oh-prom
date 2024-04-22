@@ -1,9 +1,9 @@
 import React from 'react';
+import { KanbanBoard } from '../kanban/kanban-board';
 import './project-details.css';
-import Board from '../kanban/kanban-board';
 
 export const ProjectDetails = ({ project }) => {
-  console.log(project);
+  const { tasks } = project;
 
   return (
     <>
@@ -18,13 +18,7 @@ export const ProjectDetails = ({ project }) => {
       <div className="projects-section">
         <h4>Tasks:</h4>
         <div className="projects-section">
-          <Board />
-          {/* {project.tasks.map((task, key) => (
-            <div className="projects-section" key={task.title + key}>
-              <h4>{task.title}</h4>
-              <p>{task.description}</p>
-            </div>
-          ))} */}
+          <KanbanBoard tasks={tasks} projectId={project.id} />
         </div>
       </div>
     </>

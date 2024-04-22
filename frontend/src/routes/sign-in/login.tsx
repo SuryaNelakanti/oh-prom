@@ -16,9 +16,10 @@ export const LoginPage = () => {
   useEffect(() => {
     if (isSuccess && data) {
       setErrorText('');
-      const { access, refresh } = data.data;
+      const { access, refresh, id } = data.data;
       TokenManager.saveAccessToken(access);
       TokenManager.saveRefreshToken(refresh);
+      TokenManager.saveUserToken(id);
       navigate('/');
     }
 
@@ -35,7 +36,6 @@ export const LoginPage = () => {
         setErrorText('Something went wrong, please try again later');
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError, data, error]);
 
   const handleLogin = async (e: { preventDefault: () => void }) => {

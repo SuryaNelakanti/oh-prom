@@ -9,6 +9,8 @@
   min-width: 16rem;
   padding: 0.2rem;
   background-color: var(--card-hover-icon-background-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .item {
@@ -24,8 +26,14 @@
     0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur)
       var(--card-box-shadow-2),
     0 0 0 1px var(--card-border-color);
+
+  position: relative;
+  padding-top: 0.2rem;
   padding-left: 0.4rem;
   padding-right: 0.4rem;
+  padding-bottom: 0.2rem;
+
+  margin-bottom: 0.4rem;
   border-radius: 15px;
   transition: box-shadow 0.25s;
   width: 100%;
@@ -42,6 +50,47 @@
         background-color: var(--card-hover-icon-background-color);
         border-color: var(--card-hover-icon-border-color);
       }
+    }
+  }
+}
+
+.add-button {
+  border-color: var(--card-hover-icon-border-color);
+  border-radius: 15px;
+  background-color: transparent;
+  border: 1px solid #333;
+  color: #333;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.icon-container {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+}
+
+.icon {
+  font-size: 12px;
+  margin-left: 5px;
+  cursor: pointer;
+  color: #999;
+}
+
+.icon:hover {
+  box-shadow:
+    0px 3px 6px var(--card-hover-box-shadow-1),
+    0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur)
+      var(--card-hover-box-shadow-2),
+    0 0 0 1px var(--card-hover-border-color);
+
+  .icon {
+    &::after {
+      background-color: var(--card-hover-icon-background-color);
+      border-color: var(--card-hover-icon-border-color);
     }
   }
 }

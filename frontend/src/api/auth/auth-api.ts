@@ -8,31 +8,23 @@ import {
   RegisterPayload,
 } from './types';
 
-// Api.
-export const registerRequest = async (payload: RegisterPayload) =>
-  await api.post('/register/', payload);
-
-export const loginRequest = async (payload: LoginPayload) =>
-  await api.post('/login/', payload);
-
-export const logoutRequest = async (payload: LogoutPayload) =>
-  await api.post('/logout/', payload);
-
+// Functions.
 export const refreshTokenRequest = async (payload: RefreshPayload) =>
   await api.post('/token/refresh/', payload);
 
 // Hooks.
 export const useLoginRequest = () =>
   useMutation({
-    mutationFn: async (payload: LoginPayload) => loginRequest(payload),
+    mutationFn: async (payload: LoginPayload) => api.post('/login/', payload),
   });
 
 export const useRegisterRequest = () =>
   useMutation({
-    mutationFn: async (payload: RegisterPayload) => registerRequest(payload),
+    mutationFn: async (payload: RegisterPayload) =>
+      api.post('/register/', payload),
   });
 
 export const useLogoutRequest = () =>
   useMutation({
-    mutationFn: async (payload: LogoutPayload) => logoutRequest(payload),
+    mutationFn: async (payload: LogoutPayload) => api.post('/logout/', payload),
   });

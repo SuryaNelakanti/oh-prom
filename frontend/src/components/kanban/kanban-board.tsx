@@ -1,57 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { KanbanColumn } from './kanban-columns';
-import './kanban-board.css';
 
-const Board = () => {
+import {
+  useAddTaskRequest,
+  useDeleteTaskRequest,
+  useEditTaskRequest,
+} from '../../api/tasks/task-api';
+import { TaskStatus } from '../../api/tasks/types';
+import './kanban-board.css';
+import { KanbanColumn } from './kanban-columns';
+
+export const KanbanBoard = ({ tasks, projectId }) => {
+  const { mutate: editTask } = useEditTaskRequest();
+  const { mutate: deleteTask } = useDeleteTaskRequest();
+  const { mutate: addTask, isSuccess, data } = useAddTaskRequest(projectId);
+
   const initialColumns = {
-    todo: {
-      id: 'todo',
+    [TaskStatus.TODO]: {
+      id: TaskStatus.TODO,
       title: 'To do',
-      list: [
-        { id: '123123+', title: 'text1 title' },
-        { id: '123123', text: 'text2' },
-        { id: '13123+', text: 'text3' },
-      ],
+      list: [],
+      status: TaskStatus.TODO,
     },
-    inprogress: {
-      id: 'inprogress',
+    [TaskStatus.IN_PROGRESS]: {
+      id: TaskStatus.IN_PROGRESS,
       title: 'In Progress',
-      list: [
-        { id: '12123+', text: 'text4' },
-        { id: '123+', text: 'text5' },
-        { id: '12', text: 'text6' },
-      ],
+      list: [],
+      status: TaskStatus.IN_PROGRESS,
     },
-    inreview: {
-      id: 'onhold',
+    [TaskStatus.REVIEW]: {
+      id: TaskStatus.REVIEW,
       title: 'In Review',
       list: [],
+      status: TaskStatus.REVIEW,
     },
-    completed: {
-      id: 'completed',
+    [TaskStatus.DONE]: {
+      id: TaskStatus.DONE,
       title: 'Completed',
       list: [],
+      status: TaskStatus.DONE,
     },
   };
 
   const [columns, setColumns] = useState({});
 
   useEffect(() => {
+    if (tasks) {
+      initialColumns[TaskStatus.DONE].list = tasks.filter(
+        (task) => task.status === TaskStatus.DONE,
+      );
+      initialColumns[TaskStatus.REVIEW].list = tasks.filter(
+        (task) => task.status === TaskStatus.REVIEW,
+      );
+      initialColumns[TaskStatus.TODO].list = tasks.filter(
+        (task) => task.status === TaskStatus.TODO,
+      );
+      initialColumns[TaskStatus.IN_PROGRESS].list = tasks.filter(
+        (task) => task.status === TaskStatus.IN_PROGRESS,
+      );
+    }
     setValues();
   }, []);
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      const taskObject = data.data;
+
+      setColumns((prev) => {
+        const columnId = taskObject.status;
+        return {
+          ...prev,
+          [columnId]: {
+            ...prev[columnId],
+            list: [...prev[columnId].list, taskObject],
+          },
+        };
+      });
+    }
+  }, [isSuccess, data]);
 
   const setValues = () => {
     const data = initialColumns;
     setColumns(data);
   };
+
   const onDragEnd = ({ source, destination }) => {
-    // If there's no valid destination, do nothing
     if (!destination) {
       return;
     }
-
-    // If the draggable is dropped in the same position, do nothing
     if (
       source.droppableId === destination.droppableId &&
       destination.index === source.index
@@ -62,7 +98,6 @@ const Board = () => {
     const startColumn = columns[source.droppableId];
     const endColumn = columns[destination.droppableId];
 
-    // If the draggable is dropped in the same column
     if (startColumn === endColumn) {
       const newTaskList = Array.from(startColumn.list);
       const [removedTask] = newTaskList.splice(source.index, 1);
@@ -78,7 +113,6 @@ const Board = () => {
         [updatedColumn.id]: updatedColumn,
       }));
     } else {
-      // If the draggable is moved to a different column
       const newStartList = startColumn.list.filter(
         (_, idx) => idx !== source.index,
       );
@@ -104,41 +138,72 @@ const Board = () => {
         [updatedStartColumn.id]: updatedStartColumn,
         [updatedEndColumn.id]: updatedEndColumn,
       }));
+
+      editTask({ status: endColumn.id, id: draggedTask.id });
     }
   };
 
-  //   const addTaskToColumn = (column) => {
-  //     // New item inserted into list array
-  //     const newObject = {
-  //       id: uuidv4(),
-  //       title: 'Test title',
-  //       text: 'Test text',
-  //     };
-  //     console.log(column);
+  const addTaskToColumn = async (column) => {
+    addTask({
+      title: 'Edit Me!',
+      description: 'Edit Me!',
+      status: column.id,
+    });
+  };
 
-  //     /*
-  //     console.log(column) result:
-  //     Object: {
-  //         id:"todo",
-  //         title:"To do",
-  //         list: [{etc}{etc}]
-  //     }
-  //     */
-  //     setColumns((prev) => ({
-  //       ...prev,
-  //       [column.id]: {
-  //         ...prev[column.id],
-  //         list: [...prev[column.id].list, newObject],
-  //       },
-  //     }));
-  //   };
+  const handleEditTask = (editedTaskObject, columnId) => {
+    setColumns((prev) => {
+      const updatedList = prev[columnId].list.map((task) => {
+        if (task.id === editedTaskObject.id) {
+          return editedTaskObject;
+        }
+        return task;
+      });
+      return {
+        ...prev,
+        [columnId]: {
+          ...prev[columnId],
+          list: updatedList,
+        },
+      };
+    });
+
+    editTask({
+      description: editedTaskObject.description,
+      title: editedTaskObject.title,
+      id: editedTaskObject.id,
+    });
+  };
+
+  const handleDeleteTask = (deletedTaskObject, columnId) => {
+    setColumns((prev) => {
+      const updatedList = prev[columnId].list.filter(
+        (task) => task.id !== deletedTaskObject.id,
+      );
+      return {
+        ...prev,
+        [columnId]: {
+          ...prev[columnId],
+          list: updatedList,
+        },
+      };
+    });
+
+    deleteTask({ id: deletedTaskObject.id });
+  };
+
   return (
     <div className="board">
       <DragDropContext onDragEnd={onDragEnd}>
         {Object.values(columns).map((column, key) => {
           return (
             <div key={key}>
-              <KanbanColumn column={column} />
+              <KanbanColumn
+                column={column}
+                add={addTaskToColumn}
+                handleEditTask={handleEditTask}
+                handleDeleteTask={handleDeleteTask}
+              />
             </div>
           );
         })}
@@ -146,5 +211,3 @@ const Board = () => {
     </div>
   );
 };
-
-export default Board;

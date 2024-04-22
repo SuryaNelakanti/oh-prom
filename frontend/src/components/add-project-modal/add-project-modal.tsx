@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { queryClient } from '../../api/base-api';
 
 const dateFormatter = (date: Date) => {
-  const day = date.getDate(); // Get day (1-31)
-  const month = date.getMonth() + 1; // Get month (0-11), add 1 to make it (1-12)
-  const year = date.getFullYear(); // Get full year (e.g., 2024)
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
 
   // Format the date as dd-mm-yyyy
   const formattedDate = `${day}-${month}-${year}`;
@@ -54,9 +54,6 @@ export const AddProjectModal = ({ isOpen, onClose }) => {
         message: 'You cannot end the project before you begin!',
       });
     }
-
-    console.log(formData);
-
     mutate({
       ...formData,
       start_date: dateFormatter(startDate),
@@ -115,7 +112,9 @@ export const AddProjectModal = ({ isOpen, onClose }) => {
                 />
               </div>
               {error.status && <p>{error.message}</p>}
-              <button type="submit">Submit</button>
+              <button type="submit" className="add-button">
+                Submit
+              </button>
             </form>
           </div>
         </div>
