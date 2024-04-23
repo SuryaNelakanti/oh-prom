@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { ErrorPage, ProjectDetails, Profile, App } from './routes';
+import { ErrorPage, Project, Profile, App } from './routes';
 import { LoginPage } from './routes/sign-in/login';
 import { ProtectedRoute } from './routes/util-pages/protected-route';
 import { LogoutPage } from './routes/sign-in/logout';
@@ -20,7 +20,7 @@ export const customRouter = createBrowserRouter([
         path: '/projects/:projectId',
         element: (
           <ProtectedRoute>
-            <ProjectDetails />
+            <Project />
           </ProtectedRoute>
         ),
       },
