@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { TokenManager } from '../../utils/token-manager';
+import { Sidebar } from '../../components/sidebar/sidebar';
 
 type Props = {
   children: ReactNode;
@@ -12,5 +13,10 @@ export const ProtectedRoute: React.FC<Props> = ({ children }) => {
     return <Navigate to="/login" />;
   }
 
-  return children;
+  return (
+    <>
+      <Sidebar />
+      <div id="detail">{children}</div>
+    </>
+  );
 };

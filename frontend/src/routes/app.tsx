@@ -8,13 +8,5 @@ export const App = () => {
 
   const isHomeRoute = location.pathname === '/';
 
-  return (
-    <>
-      <Sidebar />
-      <div id="detail">
-        {isHomeRoute && <ProjectList />}
-        <Outlet />
-      </div>
-    </>
-  );
+  return <>{isHomeRoute && <ProjectList />}</>;
 };

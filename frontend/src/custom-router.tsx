@@ -15,24 +15,22 @@ export const customRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '/projects/:projectId',
-        element: (
-          <ProtectedRoute>
-            <Project />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: '/users',
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        ),
-      },
-    ],
+  },
+  {
+    path: '/projects/:projectId',
+    element: (
+      <ProtectedRoute>
+        <Project />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/users',
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/register',

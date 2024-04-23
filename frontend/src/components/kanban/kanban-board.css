@@ -21,8 +21,7 @@
   max-width: 24rem;
   min-height: 4rem;
   background-color: #fff;
-  box-shadow:
-    0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
+  box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
       var(--card-box-shadow-1),
     0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur)
       var(--card-box-shadow-2),
@@ -40,8 +39,7 @@
   width: 100%;
   height: 100%;
   &:hover {
-    box-shadow:
-      0px 3px 6px var(--card-hover-box-shadow-1),
+    box-shadow: 0px 3px 6px var(--card-hover-box-shadow-1),
       0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur)
         var(--card-hover-box-shadow-2),
       0 0 0 1px var(--card-hover-border-color);
@@ -63,9 +61,7 @@
   color: #333;
   padding: 5px 10px;
   cursor: pointer;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .icon-container {
@@ -79,19 +75,4 @@
   margin-left: 5px;
   cursor: pointer;
   color: #999;
-}
-
-.icon:hover {
-  box-shadow:
-    0px 3px 6px var(--card-hover-box-shadow-1),
-    0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur)
-      var(--card-hover-box-shadow-2),
-    0 0 0 1px var(--card-hover-border-color);
-
-  .icon {
-    &::after {
-      background-color: var(--card-hover-icon-background-color);
-      border-color: var(--card-hover-icon-border-color);
-    }
-  }
 }

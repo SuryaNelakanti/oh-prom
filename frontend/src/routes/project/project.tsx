@@ -17,6 +17,7 @@ export const Project = () => {
   const project = data?.data;
 
   return (
+    
     <div className="projects-section">
       {!isFetching && project && <ProjectDetails project={project} />}
     </div>

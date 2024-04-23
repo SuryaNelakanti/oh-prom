@@ -7,7 +7,9 @@ COPY . .
 RUN npm run build
 EXPOSE 3000
 
-FROM nginx:stable-alpine
+CMD [ "npm", "run", "preview" ]
+
+FROM nginx:alpine3.17-slim
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 RUN rm -rf /etc/nginx/html/*
