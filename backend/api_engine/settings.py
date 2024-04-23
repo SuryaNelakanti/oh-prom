@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     "projects",
     "tasks",
     "rest_framework_simplejwt.token_blacklist",
+    "channels",
+    "channels_redis",
+    "daphne",
 ]
 
 MIDDLEWARE = [
@@ -75,6 +78,15 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     "utils.custom_authentication.CustomBackend",
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
+}
 
 TEMPLATES = [
     {
@@ -154,3 +166,4 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+ASGI_APPLICATION = "api_engine.asgi.application"
