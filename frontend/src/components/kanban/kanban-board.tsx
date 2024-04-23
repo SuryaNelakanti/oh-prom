@@ -18,7 +18,7 @@ export const KanbanBoard = ({ tasks, projectId }) => {
   const initialColumns = {
     [TaskStatus.TODO]: {
       id: TaskStatus.TODO,
-      title: 'To do',
+      title: 'To Do',
       list: [],
       status: TaskStatus.TODO,
     },

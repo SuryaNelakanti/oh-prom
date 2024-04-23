@@ -71,7 +71,7 @@ button:active {
 }
 
 #sidebar {
-  width: 22rem;
+  max-width: 22rem;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
   display: flex;
@@ -200,7 +200,6 @@ i {
 
 #detail {
   flex: 1;
-  padding: 2rem 4rem;
   width: 100%;
 }
 

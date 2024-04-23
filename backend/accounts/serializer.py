@@ -18,15 +18,24 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    def login(self, value):
+    def update(self, instance, validated_data):
+        user = get_user_model().objects.get(id=self.instance.id)
+        user.set_password(validated_data["password"])
+        user.username = validated_data["username"]
+        user.email = validated_data["email"]
+        user.save()
+        return user
+
+    def validate_email(self, value):
+        if self.instance is not None and self.instance.email == value:
+            return value
         if get_user_model().objects.filter(email=value).exists():
             raise serializers.ValidationError("Account already exists")
         return value
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ["id", "username", "email", "password"]
-        write_only = ["password"]
 
 
 class UserLoginSerializer(serializers.Serializer):

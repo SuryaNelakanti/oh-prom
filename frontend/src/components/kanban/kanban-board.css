@@ -6,8 +6,8 @@
 }
 
 .column {
-  min-width: 16rem;
-  padding: 0.2rem;
+  min-width: 25rem;
+  padding: 0.4rem;
   background-color: var(--card-hover-icon-background-color);
   display: flex;
   flex-direction: column;
@@ -17,9 +17,10 @@
   border: 1px solid black;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 15rem;
+  min-width: 24rem;
+  max-width: 24rem;
   min-height: 4rem;
-  background-color: var(--background-color);
+  background-color: #fff;
   box-shadow:
     0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
       var(--card-box-shadow-1),

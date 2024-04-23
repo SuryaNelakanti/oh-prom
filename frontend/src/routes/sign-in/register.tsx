@@ -1,17 +1,18 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { useLoginRequest } from '../../api/auth/auth-api';
-import { TokenManager } from '../../utils/token-manager';
-import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterRequest } from '../../api/auth/auth-api';
+import { TokenManager } from '../../utils/token-manager';
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordDupe, setPasswordDupe] = useState('');
   const [errorText, setErrorText] = useState<string>();
 
   const navigate = useNavigate();
-  const { mutate, isSuccess, isError, error, data } = useLoginRequest();
+  const { mutate, isSuccess, isError, error, data } = useRegisterRequest();
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -38,20 +39,24 @@ export const LoginPage = () => {
     }
   }, [isSuccess, isError, data, error]);
 
-  const handleLogin = async (e: { preventDefault: () => void }) => {
+  const handleRegister = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (email && password) {
-      await mutate({ email, password });
+    if (password !== passwordDupe) {
+      setErrorText('Passwords do not match');
+      return;
+    }
+    if (email && password && username) {
+      await mutate({ email, password, username });
     } else {
-      alert('Invalid email or password');
+      alert('Invalid email, username or password');
     }
   };
 
   return (
     <div className="modal">
       <div className="modal-content">
-        <h1>Login!</h1>
-        <form onSubmit={handleLogin}>
+        <h1>Register!</h1>
+        <form onSubmit={handleRegister}>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
@@ -59,6 +64,15 @@ export const LoginPage = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -70,27 +84,22 @@ export const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="shaped-blob"></div>
-
-          {isError && errorText && (
+          <div className="form-group">
+            <label htmlFor="password">Confirm Password:</label>
+            <input
+              id="password"
+              type="password"
+              value={passwordDupe}
+              onChange={(e) => setPasswordDupe(e.target.value)}
+            />
+          </div>
+          {errorText && (
             <label htmlFor="password">Error occured: {errorText}</label>
           )}
 
           <button type="submit" className="add-button">
-            Login
+            Register!
           </button>
-
-          <div className="form-group">
-            <label>Do not have an account?</label>
-            <button
-              onClick={() => {
-                navigate('/register');
-              }}
-              className="add-button"
-            >
-              Register
-            </button>
-          </div>
         </form>
       </div>
     </div>

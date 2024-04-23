@@ -24,6 +24,12 @@ export const useRegisterRequest = () =>
       api.post('/register/', payload),
   });
 
+export const useEditUserDetailsRequest = (id) =>
+  useMutation({
+    mutationFn: async (payload: RegisterPayload) =>
+      api.put(`/users/${id}/`, payload),
+  });
+
 export const useLogoutRequest = () =>
   useMutation({
     mutationFn: async (payload: LogoutPayload) => api.post('/logout/', payload),

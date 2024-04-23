@@ -4,6 +4,7 @@ import { ErrorPage, ProjectDetails, Profile, App } from './routes';
 import { LoginPage } from './routes/sign-in/login';
 import { ProtectedRoute } from './routes/util-pages/protected-route';
 import { LogoutPage } from './routes/sign-in/logout';
+import { RegisterPage } from './routes/sign-in/register';
 
 export const customRouter = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const customRouter = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />,
   },
   {
     path: '/login',

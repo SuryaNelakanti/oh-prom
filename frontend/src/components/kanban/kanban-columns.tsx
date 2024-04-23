@@ -10,8 +10,10 @@ export const KanbanColumn = ({
 }) => {
   return (
     <div>
-      <h3>{column.title}</h3>
-
+      <div className="projects-section">
+        <h4>{column.title}</h4>
+        <p>Total: {column.list.length}</p>
+      </div>
       <Droppable droppableId={column.id}>
         {(provided) => (
           <div className="column" ref={provided.innerRef}>
