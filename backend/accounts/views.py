@@ -21,6 +21,7 @@ class RegistrationView(APIView):
             {
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
+                "id": user.id,
             },
             status=status.HTTP_201_CREATED,
         )
@@ -54,7 +55,7 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
-            refresh_token = request.data["refresh_token"]
+            refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(
@@ -65,6 +66,7 @@ class LogoutView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserCRUDView(generics.RetrieveUpdateDestroyAPIView):
+class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_user_model().objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer

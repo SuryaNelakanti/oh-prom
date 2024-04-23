@@ -7,7 +7,7 @@ from accounts.views import (
     LogoutView,
     LoginView,
     RegistrationView,
-    UserCRUDView,
+    UserRetrieveUpdateDestroyView,
 )
 from projects.views import (
     ProjectListCreateAPIView,
@@ -22,7 +22,7 @@ urlpatterns = [
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path(
         "users/<int:pk>/",
-        UserCRUDView.as_view(),
+        UserRetrieveUpdateDestroyView.as_view(),
         name="user-detail",
     ),
     path(
