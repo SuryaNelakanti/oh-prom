@@ -15,7 +15,8 @@ services:
     volumes:
       - ./backend:/backend
     depends_on:
-      - db
+      db:
+        condition: service_started
     command:
       [
         './wait-for-connect.sh',
