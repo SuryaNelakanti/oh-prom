@@ -13,7 +13,7 @@ import { KanbanColumn } from './kanban-columns';
 export const KanbanBoard = ({ tasks, projectId }) => {
   const { mutate: editTask } = useEditTaskRequest();
   const { mutate: deleteTask } = useDeleteTaskRequest();
-  const { mutate: addTask, isSuccess, data } = useAddTaskRequest(projectId);
+  const { mutate: addTask } = useAddTaskRequest(projectId);
 
   const initialColumns = {
     [TaskStatus.TODO]: {
@@ -60,24 +60,7 @@ export const KanbanBoard = ({ tasks, projectId }) => {
       );
     }
     setValues();
-  }, []);
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      const taskObject = data.data;
-
-      setColumns((prev) => {
-        const columnId = taskObject.status;
-        return {
-          ...prev,
-          [columnId]: {
-            ...prev[columnId],
-            list: [...prev[columnId].list, taskObject],
-          },
-        };
-      });
-    }
-  }, [isSuccess, data]);
+  }, [tasks]);
 
   const setValues = () => {
     const data = initialColumns;

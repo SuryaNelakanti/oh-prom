@@ -64,10 +64,11 @@ class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     def perform_destroy(self, instance):
         message = {
             "type": "send_task_update",
-            "message": str(instance.id),
+            "message": {"id": str(instance.id)},
             "action": "delete",
         }
+        super().perform_destroy(instance)
+
         channel_layer = get_channel_layer()
         group_name = f"project_{instance.project_id}"
         async_to_sync(channel_layer.group_send)(group_name, message)
-        return super().perform_destroy(instance)
