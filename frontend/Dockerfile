@@ -9,7 +9,8 @@ EXPOSE 3000
 
 CMD [ "npm", "run", "preview" ]
 
-FROM nginx:alpine3.17-slim
+
+FROM nginx:stable-alpine
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 RUN rm -rf /etc/nginx/html/*
