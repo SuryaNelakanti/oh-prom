@@ -19,8 +19,10 @@ export const ProjectList: React.FC = () => {
       ) : (
         <>
           {isSuccess &&
+            projectListApiResponse &&
+            projectListApiResponse.length > 0 &&
             projectListApiResponse.map((project, key) => (
-              <ProjectCard key={key + project.id} projectDetails={project} />
+              <ProjectCard projectDetails={project} />
             ))}
           <ProjectCard projectDetails={null} createProject />
         </>
