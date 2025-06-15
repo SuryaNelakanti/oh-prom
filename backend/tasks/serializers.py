@@ -1,8 +1,6 @@
 from rest_framework import serializers
 
 from accounts.serializer import UserSerializer
-from projects.serializers import ProjectSerializer
-
 from .models import Task
 
 
