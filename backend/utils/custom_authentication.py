@@ -9,5 +9,5 @@ class CustomBackend(ModelBackend):
             if user.check_password(password):
                 return user
             return None  # Incorrect password
-        except:
+        except get_user_model().DoesNotExist:
             return None  # Email does not exist

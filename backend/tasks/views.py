@@ -1,11 +1,8 @@
-import json
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from django.core.serializers.json import DjangoJSONEncoder
 
-from projects.consumers import ProjectConsumer
 from .models import Task
 from .serializers import TaskSerializer
 

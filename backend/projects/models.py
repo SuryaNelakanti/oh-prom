@@ -20,3 +20,6 @@ class Project(models.Model):
     )
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.title

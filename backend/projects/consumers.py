@@ -1,5 +1,4 @@
 import json
-from re import S
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from django.core.serializers.json import DjangoJSONEncoder
